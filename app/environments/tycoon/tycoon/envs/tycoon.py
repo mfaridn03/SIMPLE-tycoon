@@ -35,8 +35,6 @@ class TycoonEnv(gym.Env):
 
     def step(self, action):
         """
-        From the docs:
-
         The step method accepts an action from the current active player
         and performs the necessary steps to update the game environment.
         It should also it should update the current_player_num to the
@@ -47,8 +45,6 @@ class TycoonEnv(gym.Env):
 
     def reset(self):
         """
-        From the docs:
-
         The reset method is called to reset the game to the starting state,
         ready to accept the first action.
         """
@@ -56,8 +52,6 @@ class TycoonEnv(gym.Env):
 
     def render(self, mode="human", close=False):
         """
-        From the docs:
-
         The render function is called to output a visual or
         human readable summary of the current game state to the log file.
         """
@@ -65,8 +59,6 @@ class TycoonEnv(gym.Env):
 
     def observation(self):
         """
-        From the docs:
-
         The observation function returns a numpy array that can be fed as input
         to the PPO policy network. It should return a numeric representation
         of the current game state, from the perspective of the current player,
@@ -76,8 +68,6 @@ class TycoonEnv(gym.Env):
 
     def legal_actions(self):
         """
-        From the docs:
-
         The legal_actions function returns a numpy vector of the same
         length as the action space, where 1 indicates that the
         action is valid and 0 indicates that the action is invalid.
