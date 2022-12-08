@@ -2,6 +2,7 @@ import gym
 import numpy as np
 
 import config
+import tycoon.envs.Objects.utils as utils
 
 from stable_baselines import logger
 from tycoon.envs.game import Game
@@ -15,7 +16,6 @@ class TycoonEnv(gym.Env):
         super().__init__()
         self.name = "tycoon"
         self.manual = manual
-        self.n_players = 4
 
         self.players = [
             Player("A"),
@@ -23,6 +23,7 @@ class TycoonEnv(gym.Env):
             Player("C"),
             Player("D"),
         ]
+        self.n_players = len(self.players)
 
         self.game = Game(self.players)
         self.game.init_game()
@@ -33,6 +34,9 @@ class TycoonEnv(gym.Env):
         self.observation_space = None
         self.verbose = verbose
 
+        self.done = False
+        self.current_player_num = 0
+
     def step(self, action):
         """
         The step method accepts an action from the current active player
@@ -41,7 +45,12 @@ class TycoonEnv(gym.Env):
         next player, and check to see if an end state
         of the game has been reached.
         """
-        pass
+        reward = [0] * self.n_players
+
+        # some stuff here
+
+        if not self.done:
+            self.current_player_num = (self.current_player_num + 1) % self.n_players
 
     def reset(self):
         """
@@ -49,6 +58,8 @@ class TycoonEnv(gym.Env):
         ready to accept the first action.
         """
         self.wrapper.reset()
+        self.done = False
+        self.current_player_num = 0
 
     def render(self, mode="human", close=False):
         """
@@ -74,6 +85,14 @@ class TycoonEnv(gym.Env):
         """
         pass
 
+    def get_total_action_count(self):
+        """
+        Calculate the number of possible plays of a single turn.
+        In a deck there are two jokers, 13 cards of each suit, and 4 suits.
+        A joker can be used as a wild card, so there are 54 possible plays of a single card.
+        """
+        total = 0
+
 
 class TycoonWrapper:
     # Wrapper for the game to be used in the environment
@@ -89,3 +108,6 @@ class TycoonWrapper:
         ]
         self.game = Game(self.players)
         self.game.init_game()
+
+    def get_all_moves(self):
+        pass
