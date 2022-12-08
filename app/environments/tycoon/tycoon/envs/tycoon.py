@@ -4,6 +4,7 @@ import numpy as np
 import config
 
 from stable_baselines import logger
+from tycoon.envs.game import Game
 
 
 class TycoonEnv(gym.Env):
@@ -17,8 +18,7 @@ class TycoonEnv(gym.Env):
         num_player = 4
         self.n_player = num_player
 
-        self.game = None  # change this later
-        # other setup stuff
+        self.game = Game()
 
     def step(self, action):
         pass
@@ -36,12 +36,7 @@ class TycoonEnv(gym.Env):
         pass
 
 
-class TycoonGame:
-    def __init__(self) -> None:
-        pass
-
-
 class TycoonWrapper:
     # Wrapper for the game to be used in the environment
-    def __init__(self, game):
+    def __init__(self, game: Game):
         self.game = game
