@@ -2,7 +2,6 @@
 from Objects.exceptions import *
 from Objects.utils import *
 from Objects.deck import Deck
-from Objects.player import Player
 from Players.__players import *
 from Objects.consts import MAX_ROUNDS
 
@@ -11,7 +10,8 @@ import typing
 
 
 class Game:
-    def __init__(self, playerlist: typing.List[Player]):
+    def __init__(self, playerlist=None):
+        self.playerlist = playerlist
         if len(playerlist) < 3 or len(playerlist) > 54:
             raise NotEnoughPlayersError("Require 2-54 players for a valid game")
 
@@ -83,6 +83,9 @@ class Game:
             self.data["hand_sizes"][curr_player] += 1
 
     def init_game(self):
+        if not self.playerlist:
+            raise NotEnoughPlayersError("No player list provided")
+
         self.deal()
         # Player that has 3D will start the game
         other_player_names = []
@@ -424,16 +427,4 @@ class Game:
 
 
 if __name__ == "__main__":
-    player1 = PlayerA()
-    player2 = PlayerB()
-    player3 = PlayerC()
-    player4 = PlayerD()
-    # player5 = PlayerSTRAT()
-
-    playerlist = [player1, player2, player3, player4]
-    # playerlist = [player1, player2, player3, player4, player5]
-
-    game = Game(playerlist)
-    game.play_text_based()
-
     pass
